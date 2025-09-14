@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
+const path = require('path');
 
 (async () => {
     // Get number of iterations from command line argument, default to 10
@@ -82,8 +83,16 @@ const fs = require('fs');
     // Remove duplicates and save all links to file
     const uniqueLinks = [...new Set(allLinks)];
     const content = uniqueLinks.join('\n');
-    fs.writeFileSync('press-release-bi.txt', content);
-    console.log(`Scraping completed! Saved ${uniqueLinks.length} unique links to press-release-bi.txt`);
+    
+    // Create output directory if it doesn't exist
+    const outputDir = './output';
+    if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir, { recursive: true });
+    }
+    
+    const outputFile = path.join(outputDir, 'press-release-bi.txt');
+    fs.writeFileSync(outputFile, content);
+    console.log(`Scraping completed! Saved ${uniqueLinks.length} unique links to ${outputFile}`);
 
     await browser.close();
 })().catch(err => {

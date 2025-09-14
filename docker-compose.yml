@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  bi-scraper:
+    build: .
+    container_name: bi-press-release-scraper
+    volumes:
+      - ./output:/usr/src/app/output
+    environment:
+      - NODE_ENV=production
+    command: ["node", "scraper.js", "100"]
+    restart: unless-stopped
+    
+  # Alternative service for custom iterations
+  bi-scraper-custom:
+    build: .
+    container_name: bi-scraper-custom
+    volumes:
+      - ./output:/usr/src/app/output
+    environment:
+      - NODE_ENV=production
+    # Override command when running: docker-compose run bi-scraper-custom node scraper.js 1000
+    profiles:
+      - custom

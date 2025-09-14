@@ -133,7 +133,11 @@ Scraper akan menghasilkan file `./output/press-release-bi.txt` yang berisi:
 1. **Timeout Error**: Increase timeout di script atau cek koneksi internet
 2. **No Links Found**: Website mungkin berubah struktur, perlu update selector
 3. **Docker Permission Error**: Pastikan volume mounting path benar
-4. **Chrome Not Found**: Rebuild Docker image dengan `--no-cache`
+4. **Chrome Not Found in Docker**:
+   - Pastikan environment variables `PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true` dan `PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable` sudah di-set
+   - Rebuild Docker image dengan `--no-cache`
+   - Cek apakah Google Chrome terinstall di container
+5. **Docker Build Fails**: Pastikan Docker daemon running dan ada koneksi internet untuk download dependencies
 
 ### Debug Mode
 

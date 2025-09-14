@@ -23,6 +23,10 @@ RUN npm ci --only=production
 # Copy app source code
 COPY . .
 
+# Set Puppeteer to use system Chrome
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
+
 # Create a non-root user to run the application
 RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
     && mkdir -p /home/pptruser/Downloads \
